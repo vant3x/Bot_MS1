@@ -28,5 +28,22 @@ app.get('/webhook', function(req, res){
 
 app.post('/webhook', function(req, res){
     var data = req.body;
-    console.log(data);
+    // console.log(data);
+    if(data.object == 'page'){
+        data.entry.forEach(function(pageEntry){
+            pageEntry.messaging.forEach(function(messagingEvent){
+
+                console.log("Entro");
+
+                if(messagingEvent.message){
+                    receiveMessage(messagingEvent);
+                }
+            });
+        });
+        res.sendStatus(200);
+    }
 });
+
+function receiveMessage(event){
+    console.log(event);
+}
